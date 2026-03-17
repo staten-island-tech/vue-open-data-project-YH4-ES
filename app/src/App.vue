@@ -1,19 +1,23 @@
 <template>
-  <h1>The homeless infoer</h1>
-  <div>
-    <canvas id="acquisitions">
+  <h1>The homeless infoer: Just a really depressing website</h1>
+  <div id="dropdown">Dropdown
+    <!-- put template here with v-for -->
+  </div>
+  <div style="width: 50%;">
+    <canvas id="acquisitions" ref="canvas">
 
     </canvas>
   </div>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import Chart from 'chart.js/auto'
 const homelessData = ref()
+
 async function getHomeless() {
   try {
-    const response = await fetch(`https://data.cityofnewyork.us/resource/bmxf-3rd4.json`)
+    const response = await fetch(`https://data.cityofnewyork.us/resource/5e9h-x6ak.json`)
     const data = await response.json()
     console.log(data)
     homelessData.value = data
@@ -25,11 +29,11 @@ async function getHomeless() {
     {
       type: 'bar',
       data: {
-        labels: homelessData.value.map(row => row.year),
+        labels: homelessData.value.map(row => row.report_date),
         datasets: [
           {
             label: 'Acquisitions by year',
-            home: homelessData.value.map(row => row.count)
+            data: homelessData.value.map(row => row.fwc_avg_daily_census)
           }
         ]
       }
@@ -37,7 +41,8 @@ async function getHomeless() {
   );
 }
 
-getHomeless()
+onMounted( async () => getHomeless())
+
 
 
 </script>
