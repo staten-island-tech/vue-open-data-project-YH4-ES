@@ -54,4 +54,9 @@ onMounted( async () => getHomeless("report_date", "fwc_avg_daily_census", `https
 :global(html) {
   font-family: Consolas, monaco, monospace;
 }
+#dropdown{
+  background-color: aliceblue;
+  width: 100px;
+  text-align: center;
+}
 </style>
