@@ -13,20 +13,17 @@
 import {onMounted, ref} from "vue";
 import Chart from 'chart.js/auto'
 const homelessData = ref()
-const dropOptions = ref([
-
-])
-
+const dropOptions = ref({})
 async function getHomeless(xValue, yValue, dataset) {
   try {
-    const response = await fetch(dataset)
-    const data = await response.json()
+    var response = await fetch(dataset)
+    var data = await response.json()
     console.log(data)
     homelessData.value = data
-    console.log(homelessData.value[1])
-    for (thing of homelessData.value[1]){
-      console.log(thing)
+    for (let key in homelessData.value[1]) {
+      dropOptions.value[key] = false
     }
+    console.log(dropOptions)
   } catch (error) {
     console.log(error)
   }
