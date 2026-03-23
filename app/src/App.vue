@@ -3,15 +3,19 @@
   <div id="dropdown">Dropdown
   </div>
   <div style="width: 1000px;">
-    <canvas id="acquisitions" ref="canvas">
-
-    </canvas>
+    <Bar
+    id="my-chart-id"
+    :options="chartOptions"
+    :data="chartData"
+  />
   </div>
 </template>
 
-<script setup>
+<script>
 import {onMounted, ref} from "vue";
-import Chart from 'chart.js/auto'
+import { Bar } from 'vue-chartjs'
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+
 const homelessData = ref()
 const dropOptions = ref({})
 async function getHomeless(xValue, yValue, dataset) {
@@ -27,25 +31,26 @@ async function getHomeless(xValue, yValue, dataset) {
   } catch (error) {
     console.log(error)
   }
-  new Chart(
-    document.getElementById('acquisitions'),
-    {
-      type: 'bar',
-      data: {
-        labels: homelessData.value.map(row => row[xValue]),
-        datasets: [
-          {
-            label: yValue,
-            data: homelessData.value.map(row => row[yValue])
-          }
-        ]
-      }
-    }
-  );
 }
 
-onMounted( async () => getHomeless("report_date", "fwc_avg_daily_census", `https://data.cityofnewyork.us/resource/5e9h-x6ak.json`))
+getHomeless("report_date", "fwc_avg_daily_census", `https://data.cityofnewyork.us/resource/5e9h-x6ak.json`)
+console.log(homelessData.value)
 
+export default {
+    name: 'BarChart',
+    components: { Bar },
+    data() {
+      return {
+        chartData: {
+          labels: "fwc_avg_daily_census",
+          datasets: homelessData.value.map(row => row["fwc_avg_daily_census"])
+        },
+        chartOptions: {
+          responsive: true
+        }
+      }
+    }
+  }
 
 
 </script>
