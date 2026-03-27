@@ -11,16 +11,9 @@ import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import { onMounted } from 'vue'
 
-/*const props = defineProps({
-    dataset: {
-        type: Object,
-        required: true,
-    }
-})
-console.log(props)*/
+console.log("MOUNTED")
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
 export default {
   props: {
     dataset: {
@@ -30,11 +23,13 @@ export default {
   },
   setup(props) {
     // setup() receives props as the first argument.
-    console.log(props.dataset)
+    console.log(props)
   },
   name: 'BarChart',
   components: { Bar },
+
   data() {
+    chartData = null
     return {
       chartData: {
         labels: [ 'January', 'February', 'March' ],
@@ -42,7 +37,7 @@ export default {
       },
       chartOptions: {
         responsive: true
-      }
+      },
     }
   }
 }
