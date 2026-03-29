@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id = "contentContainer">
         <p>{{ props.option }}</p>
     </div>
 </template>
@@ -16,5 +16,7 @@ const props = defineProps({
 </script>
 
 <style lang="css" scoped>
-
+p{
+    margin: 0
+}
 </style>
