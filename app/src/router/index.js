@@ -1,4 +1,7 @@
 import App from '@/App.vue'
+import DataSheet from '@/views/DataSheet.vue'
+import Home from '@/views/Home.vue'
+
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -7,8 +10,13 @@ const router = createRouter({
     {
        path: '/',
       name: 'home',
-      component: App,
+      component: Home,
     },
+    {
+      path: "/DataSheet",
+      name: "DataSheet",
+      component: DataSheet,
+    }
   ],
 })
 

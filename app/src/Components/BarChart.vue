@@ -9,30 +9,39 @@
 <script>
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import { onMounted } from 'vue'
+import { watch, ref, onMounted } from 'vue'
+import PieChart from './PieChart.vue'
 
 console.log("MOUNTED")
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-let values
 
 export default {
+  name: 'BarChart',
+  components: { Bar },
   props: {
     dataset: {
       type: Object,
       required: true
     }
   },
-  setup(props) {
-    // setup() receives props as the first argument.
-    console.log(props.dataset.xValue)
-    values = props.dataset
+  
+  computed: {
+    chartData () {
+      return {
+        labels: this.dataset.xValue,
+        datasets: [
+        {
+          label: "I really don't wanna pass in a third variable for this",
+          backgroundColor: '#163d78',
+          data: this.dataset.yValue
+        }
+        ]
+      }
+    }
   },
-  name: 'BarChart',
-  components: { Bar },
-
-  data() {
+  /*data() {
     return {
       chartData: {
         labels: values.xValue,
@@ -49,5 +58,6 @@ export default {
       },
     }
   }
+  */
 }
 </script>
